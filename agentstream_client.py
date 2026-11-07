@@ -187,7 +187,8 @@ class AgentStreamClient:
                     if not isinstance(event_id,str): raise self.error('INVALID_EVENT','message',response)
                     if event_id in seen: continue
                     seen.add(event_id)
-                kind=event.get('type') or event.get('event')
+                # Event names carry the protocol action; type can be AIMessageChunk/progress.
+                kind=event.get('event') or event.get('type')
                 if kind in ['tool.failed','turn.failed']: raise self.error('TOOL_FAILED' if kind=='tool.failed' else 'TURN_FAILED','message',response)
                 if kind=='assistant.delta':
                     content=event.get('content',data.get('content',''))
