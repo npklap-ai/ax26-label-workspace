@@ -35,6 +35,15 @@ class ClientTests(unittest.TestCase):
         self.assertEqual(json.loads(opener.calls[2].data),{'message':'first'})
         self.assertIn('/open/v1/chat-sessions/'+SESSION+'/messages',opener.calls[2].full_url)
         self.assertEqual(opener.calls[0].get_header('X-api-key'),'test-secret')
+    def test_event_action_takes_priority_over_message_type(self):
+        records=[{'type':'AIMessageChunk','event':'assistant.delta','content':'답변'},
+                 {'type':'progress','event':'turn.completed'}]
+        client,_=self.client([Response(('\n'.join(json.dumps(e) for e in records)).encode(),content_type='application/x-ndjson')])
+        cancel=Cancellation(5)
+        try: events=list(client.message(SESSION,'x',cancel))
+        finally: cancel.close()
+        self.assertEqual(events,[{'type':'delta','text':'답변'},{'type':'completed'}])
+
     def test_key_missing_preflight(self):
         client, opener=self.client([],key='')
         with self.assertRaises(UpstreamError) as error: client.health(Cancellation(1))
