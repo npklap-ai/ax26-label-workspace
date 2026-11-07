@@ -5,7 +5,8 @@
   <title>AX26 · 표시 문안 제작, 검토</title>
   <link rel="stylesheet" href="style.css?v=65">
   <script defer src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-  <script defer src="app.js?v=65"></script>
+  <script defer src="stream.js?v=66"></script>
+  <script defer src="app.js?v=66"></script>
 </head>
 <body>
   <header><a class="brand" href="./"><span class="mark">a</span> AX26 <span class="brand-sub">FORMULA LAB</span></a><button id="open-settings" class="settings-gear" type="button" aria-label="설정" title="설정" aria-haspopup="dialog"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M9.5 3h5l.5 3 2 .9 2.6-1 2.4 4.2-2.2 2 .2 2.2 2 1.8-2.4 4.2-2.8-1-1.8 1-.5 2.7h-5L9 20l-2-1-2.6 1L2 15.8l2.2-2L4 11.6l-2-1.8L4.4 5.6l2.8 1 1.8-1z" transform="translate(1 0) scale(.9)"/><circle cx="12" cy="12" r="3.2"/></svg></button></header>
@@ -67,20 +68,17 @@
       <aside><section class="card company-saved-card"><div class="card-heading"><h2>저장된 회사 정보</h2><span class="subtle">이 브라우저에 저장</span></div><p class="helper">저장한 정보는 표기 문구 제안·검토 요청에 자동으로 포함됩니다.</p><div id="company-saved-preview"></div><p id="company-saved-time" class="helper"></p><button id="company-copy" class="secondary" type="button" disabled>저장된 정보 복사</button><button id="company-delete" class="text-button danger-button" type="button" disabled>저장된 회사 정보 삭제</button></section>
       <section class="card"><h2>저장 범위</h2><p class="helper">이 브라우저에서 다시 접속하면 회사 정보를 불러옵니다. 다른 기기나 브라우저와 자동 동기화되지 않으며, 사이트 데이터를 지우면 삭제됩니다.</p><p class="helper">제품정보, 이미지, 표기 문구 초안은 현재 페이지에서만 유지됩니다.</p></section></aside>
     </div>
-    <footer><span>AX26 · 표시 문안 제작, 검토</span><span>회사 정보는 이 브라우저에 저장됩니다. 제품정보·이미지·초안은 새로고침 전에 복사하세요.</span></footer>
+    <footer><span>AX26 · 표시 문안 제작, 검토</span><span>회사 정보는 이 브라우저에 저장됩니다. 제품정보·이미지는 새로고침 전에 복사하세요. 요청과 답변은 AgentStream에 보관될 수 있습니다.</span></footer>
   </main>
   <dialog id="settings-dialog" class="api-dialog" aria-labelledby="settings-title"><div class="api-dialog-heading"><h2 id="settings-title">설정</h2><button id="close-settings" class="text-button" type="button" aria-label="설정 닫기">✕</button></div><div class="settings-options"><button id="settings-company" type="button"><strong>회사 정보</strong><span>제조원·판매원·주소·연락처 관리</span></button><button id="open-api-settings" type="button"><strong>API 연결</strong><span id="api-header-status">연결 확인 중</span></button></div></dialog>
   <dialog id="api-settings-dialog" class="api-dialog" aria-labelledby="api-settings-title" aria-describedby="api-settings-description">
-    <div class="api-dialog-heading"><div><p class="eyebrow">AGENTSTREAM</p><h2 id="api-settings-title">API 연결 설정</h2></div><button id="close-api-settings" class="text-button" type="button" aria-label="API 설정 닫기">✕</button></div>
+    <div class="api-dialog-heading"><div><p class="eyebrow">AGENTSTREAM</p><h2 id="api-settings-title">API 연결 상태</h2></div><button id="close-api-settings" class="text-button" type="button" aria-label="API 설정 닫기">✕</button></div>
     <p id="api-settings-description" class="helper">서버 연결 상태를 확인하고 연결 테스트를 실행할 수 있습니다.</p>
-    <div class="api-target"><strong>건강기능식품_8팀</strong><span>AX 해커톤 8팀</span><span class="pending" id="api-key-status">키 미입력 · 연결 확인 전</span></div>
-    <form id="api-settings-form" autocomplete="off">
-      <label for="api-base-url">API 호출 기본 주소</label><input id="api-base-url" readonly value="https://api-gateway.jntp-ax.or.kr/agentstream">
-      <label for="api-chatbot-id">챗봇 ID</label><input id="api-chatbot-id" readonly value="5a09d748-53e8-4260-9d24-5a64e5e52960">
-      <label for="api-key">API 키 <span class="optional">최초 등록 · 변경 시 입력</span></label><div class="api-key-field"><input id="api-key" type="password" maxlength="2048" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="발급받은 키를 붙여넣으세요"><button id="toggle-api-key" class="text-button" type="button" aria-label="API 키 보기" aria-pressed="false">보기</button></div>
-      <p class="helper">키는 서버에 암호화하여 보관하며, 같은 브라우저에서 연결을 30일간 유지합니다. 연결 해제를 누르면 저장된 키를 삭제합니다.</p>
-      <div class="api-actions"><button class="primary" type="submit">연결 저장</button><button id="test-api-key" class="secondary" type="button">연결 테스트</button><button id="clear-api-key" class="secondary" type="button" disabled>연결 해제</button></div><p id="api-settings-status" class="helper" role="status" aria-live="polite">키를 한 번 등록하면 새로고침하거나 다시 접속해도 연결이 유지됩니다.</p>
-    </form>
+    <div class="api-target"><strong>건강기능식품_8팀</strong><span>AX 해커톤 8팀</span><span class="pending" id="api-connection-status">서버 설정 확인 중</span></div>
+    <p class="helper">API 연결은 서버 환경설정으로 관리합니다. 챗봇 상태와 연결된 임베딩 모델을 확인할 수 있습니다.</p>
+    <button id="test-api-connection" class="secondary" type="button">챗봇 상태 확인</button>
+    <p id="api-settings-status" class="helper" role="status" aria-live="polite">서버 연결 설정을 확인하고 있습니다.</p>
+    <details class="api-details"><summary>상태 응답 자세히 보기</summary><pre id="api-health-details" class="ai-result">아직 상태를 확인하지 않았습니다.</pre></details>
     <details class="api-details"><summary>연동 세부정보</summary><dl><dt>인증 헤더</dt><dd><code>X-API-Key</code></dd><dt>워크스페이스 ID</dt><dd><code>a35a47e3-876f-43c2-ac7f-7a96bdff83e2</code></dd><dt>호출 순서</dt><dd>상태 확인 → 대화 생성 → 메시지 전송</dd><dt>API 경로</dt><dd><code>GET /open/v1/chatbots/{chatbot_id}/health</code><br><code>POST /open/v1/chatbots/{chatbot_id}/sessions</code><br><code>POST /open/v1/chat-sessions/{session_id}/messages</code></dd><dt>응답 형식</dt><dd>줄 단위 JSON 스트리밍 (NDJSON)</dd></dl><p class="helper">챗봇에 연결된 건강기능식품_RAG_8팀 에이전트가 건강기능식품_표시광고_8팀 지식베이스를 검색합니다. 요청과 답변은 AgentStream 대화 이력에 저장될 수 있습니다.</p></details>
     <button id="test-knowledge" class="secondary" type="button">지식베이스 검색 테스트</button><p id="knowledge-test-status" class="helper" role="status"></p><pre id="knowledge-test-result" class="ai-result" hidden></pre><div class="api-links"><a href="https://agentopen.jntp-ax.or.kr/settings" target="_blank" rel="noopener noreferrer">AgentStream API 관리 열기 ↗</a><a href="https://agentopen.jntp-ax.or.kr/chatbot/5a09d748-53e8-4260-9d24-5a64e5e52960" target="_blank" rel="noopener noreferrer">대상 챗봇 열기 ↗</a></div>
   </dialog>

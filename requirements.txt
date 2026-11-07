@@ -1,1 +1,1 @@
-cryptography
+# Python 3.10+ standard library only. No pip packages required.

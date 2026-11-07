@@ -221,9 +221,6 @@ textarea[aria-busy="true"] { background: #eef3f8b0; }
 .api-target { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border: 1px solid #fff; padding: 14px; background: #e8eff87d; border-radius: 12px; font-size: 11px; color: #6b809d; }
 .api-target strong { font-size: 13px; color: #345577; }
 .api-dialog input[readonly] { background: #eaf0f599; color: #617792; font-size: 11px; }
-.api-key-field { display: flex; align-items: center; gap: 7px; }
-.api-key-field input { flex: 1; min-width: 0; }
-.api-key-field button { min-width: 48px; }
 .api-actions { display: flex; gap: 10px; }
 .api-actions .primary { margin-top: 0; }
 .api-details { margin-top: 16px; }
@@ -503,10 +500,6 @@ textarea[aria-busy="true"] { background: #eef3f8b0; }
 @keyframes review-shimmer { from { background-position:200% 0; } to { background-position:-200% 0; } }
 @media(prefers-reduced-motion:reduce) { .review-generation-track span,.review-generation-lines i { animation:none; } }
 
-.shared-api-mode label[for="api-key"], .shared-api-mode .api-key-field,
-.shared-api-mode #api-settings-form > .helper, .shared-api-mode #api-settings-form button[type="submit"],
-.shared-api-mode #clear-api-key { display:none; }
-.shared-api-mode #api-settings-form > #api-settings-status { display:block; }
 /* Keep the primary production action within the viewport. */
 #input-pane { padding-bottom:88px; }
 #input-pane .proposal-action { position:fixed; z-index:40; left:50%; bottom:14px; transform:translateX(-50%); width:calc(100% - 60px); max-width:1540px; padding:8px; border:1px solid #ffffffc9; border-radius:15px; background:#eff5f3e8; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); box-shadow:0 4px 24px #314e7325; }
@@ -555,3 +548,12 @@ textarea[aria-busy="true"] { background: #eef3f8b0; }
  #archive-detail-panel #result-text { min-height:160px; }
  #archive-detail-panel #result-editor > .draft-actions { flex-shrink:0; }
 }
+/* Existing workspace components retain their layout; streamed references and followups stay within each result. */
+.response-evidence { margin:14px 0; padding:12px; border:1px solid #cbd9e8; border-radius:10px; font-size:12px; }
+.response-evidence summary { cursor:pointer; color:#456588; }
+.response-evidence pre { white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.8; max-height:300px; overflow:auto; }
+.response-evidence a { display:block; margin-top:10px; color:#336de0; overflow-wrap:anywhere; }
+.followup-panel { margin-top:20px; border-top:1px solid #dbe5f0; padding-top:14px; }
+.followup-form textarea { min-height:72px; }
+.followup-entry { border-top:1px solid #dbe5f0; margin-top:18px; padding-top:10px; }
+.followup-question { font-size:12px; line-height:1.8; white-space:pre-wrap; overflow-wrap:anywhere; color:#456588; }
